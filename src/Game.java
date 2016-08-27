@@ -48,7 +48,12 @@ public class Game extends JPanel implements Runnable
         
         //System.out.println(Math.PI/8);
     }
-    
+
+    public static void main(String args[])
+    {
+        new Game();
+    }
+
     public void tick()
     {
         lander.update();
@@ -58,7 +63,7 @@ public class Game extends JPanel implements Runnable
     {
         g.setColor(Color.white);
         g.fillRect(0,0,960,720);
-        buffer.createGraphics();
+
         
         Graphics2D g2 = (Graphics2D)buffer.getGraphics();
         g2.clearRect(0,0,944,704);
@@ -79,7 +84,9 @@ public class Game extends JPanel implements Runnable
     {
         lander = new Lander(140,140,Math.PI/2);
         luna = new Terrain();
-        
+
+        buffer.createGraphics();
+
         running = true;
         long lastTime = System.nanoTime();
         double amountOfTicks = 60D;
@@ -98,11 +105,13 @@ public class Game extends JPanel implements Runnable
             {
                 tick();
                 updates++;
+                paintComponent(this.getGraphics());
+                frames++;
                 delta--;
             }
-            paintComponent(this.getGraphics());
-            frames++;
-            
+
+
+
             if(System.currentTimeMillis() - timer > 1000)
             {
                 timer+=1000;

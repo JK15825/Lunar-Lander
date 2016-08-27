@@ -15,7 +15,7 @@ public class Terrain
             int columnCounter = 0;
             Scanner in = new Scanner(new File("map_eventaully.dat"));
             int type = 0;
-            while((type = in.nextInt()) != null)
+            /*while((type = in.nextInt()) != null)
             {
                 if(type != 0)
                 {
@@ -28,7 +28,7 @@ public class Terrain
                     x+=16;
                     columnCounter++;
                 }
-            }
+            }*/
             
         }
         catch(Exception e)
