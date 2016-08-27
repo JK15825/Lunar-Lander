@@ -52,6 +52,7 @@ public class Game extends JPanel implements Runnable
     public static void main(String args[])
     {
         new Game();
+        //System.out.println(System.getProperty("os.name"));
     }
 
     public void tick()
@@ -105,12 +106,19 @@ public class Game extends JPanel implements Runnable
             {
                 tick();
                 updates++;
-                paintComponent(this.getGraphics());
-                frames++;
+                if(System.getProperty("os.name").toLowerCase().contains("win"))
+                {
+                    paintComponent(this.getGraphics());
+                    frames++;
+                }
                 delta--;
             }
 
-
+            if(!System.getProperty("os.name").toLowerCase().contains("win"))
+            {
+                paintComponent(this.getGraphics());
+                frames++;
+            }
 
             if(System.currentTimeMillis() - timer > 1000)
             {

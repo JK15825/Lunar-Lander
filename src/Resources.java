@@ -11,7 +11,7 @@ public class Resources
     {
         try
         {
-            BufferedImage temp = ImageIO.read(new File("alphabet.png"));
+            BufferedImage temp = ImageIO.read(new File("res/alphabet.png"));
             
             CHARACTERS = new BufferedImage[41];
             int count = 0;
@@ -28,7 +28,7 @@ public class Resources
                 //BufferedImage temp2 = temp;
             }
             
-            temp = ImageIO.read(new File("terrain_angles.png"));
+            temp = ImageIO.read(new File("res/terrain_angles.png"));
             
             TERRAIN_ANGLES = new BufferedImage[19];
             count = 0;
@@ -45,8 +45,8 @@ public class Resources
                 //BufferedImage temp2 = temp;
             }
             
-            ROCKET = ImageIO.read(new File("rocket.png"));
-            ROCKET_FIRE = ImageIO.read(new File("rocket_fire.png"));
+            ROCKET = ImageIO.read(new File("res/rocket.png"));
+            ROCKET_FIRE = ImageIO.read(new File("res/rocket_fire.png"));
             
         }
         catch(Exception e)
