@@ -42,7 +42,7 @@ public class Game extends JPanel implements Runnable
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         
-        t = new Thread(this);
+//        t = new Thread(this);
         
         Resources.loadResources();
         
