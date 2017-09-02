@@ -1,12 +1,16 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLAutoDrawable;
+
 public class Lander
 {
-    private final double SHIP_ACCEL = .1;
+    private final double SHIP_ACCEL = .3;
     private double vertVelocity;
     private double horzVelocity;
-    private double dir;
+    private float dir;
     private int x;
     private int y;
     
@@ -14,7 +18,7 @@ public class Lander
     private boolean rotateLeft;
     private boolean rotateRight;
     
-    public Lander(int x, int y, double dir)
+    public Lander(int x, int y, float dir)
     {
         this.x = x;
         this.y = y;
@@ -30,7 +34,7 @@ public class Lander
         {
             dir += Math.PI/64;
             if(dir > Math.PI)
-                dir = Math.PI;
+                dir = (float)Math.PI;
         }
         
         if(rotateRight)
@@ -51,9 +55,28 @@ public class Lander
         y += vertVelocity;
     }
     
-    public void draw(Graphics2D g)
+    public void draw(GLAutoDrawable drawable)
     {
-        drawCharacters(g, "HORZ: " + horzVelocity, 0, 16, 6);
+    	GL2 gl = drawable.getGL().getGL2();
+    	
+    	gl.glPushMatrix();
+    	gl.glLoadIdentity(); 
+    	
+    	gl.glTranslatef(x, -y, 0);
+    	gl.glRotatef(dir, x, 0, 0);
+    	
+    	//System.out.printf("Rotation: %.2f\n",dir);
+    	
+    	gl.glBegin(GL.GL_TRIANGLES);
+        gl.glColor3f(1.0f, 0.0f, .0f);   // Red
+        gl.glVertex2f(-20f, -20f);
+        gl.glColor3f(0.0f, 1.0f, 0.0f);   // Green
+        gl.glVertex2f(0.0f, 20f);
+        gl.glColor3f(0.0f, 0.0f, 1.0f);   // Blue
+        gl.glVertex2f(20f, -20f);
+        
+        gl.glPopMatrix();        
+        /*drawCharacters(g, "HORZ: " + horzVelocity, 0, 16, 6);
         drawCharacters(g, "VERT: " + vertVelocity, 0, 24, 6);
         if(dir != 0)
         {
@@ -83,7 +106,7 @@ public class Lander
         
         //g.drawRect(-8,-8,16,16);
         g.setTransform(old);
-        //g.translate(x,y);
+        //g.translate(x,y);*/
     }
     
     public void toggleThrust(boolean t)
