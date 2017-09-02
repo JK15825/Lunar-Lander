@@ -62,8 +62,11 @@ public class Lander
     	gl.glPushMatrix();
     	gl.glLoadIdentity(); 
     	
+    	//gl.glRotatef(dir, 1, 0, 0);
+    	//gl.glRotatef(dir, 0, 1, 0);
+
     	gl.glTranslatef(x, -y, 0);
-    	gl.glRotatef(dir, x, 0, 0);
+    	
     	
     	//System.out.printf("Rotation: %.2f\n",dir);
     	
@@ -75,7 +78,8 @@ public class Lander
         gl.glColor3f(0.0f, 0.0f, 1.0f);   // Blue
         gl.glVertex2f(20f, -20f);
         
-        gl.glPopMatrix();        
+        gl.glPopMatrix();      
+        
         /*drawCharacters(g, "HORZ: " + horzVelocity, 0, 16, 6);
         drawCharacters(g, "VERT: " + vertVelocity, 0, 24, 6);
         if(dir != 0)
