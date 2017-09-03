@@ -64,7 +64,7 @@ public class Lander
     	
     	//gl.glRotatef(dir, 1, 0, 0);
     	//gl.glRotatef(dir, 0, 1, 0);
-
+    	gl.glRotated(dir, 1, 0, 1);
     	gl.glTranslatef(x, -y, 0);
     	
     	
