@@ -59,7 +59,7 @@ public class GameCanvas implements GLEventListener
 			}
 		});
 		bindKeys(frame);
-		lander = new Lander(1,1,0);
+		lander = new Lander(1,1,(float)Math.PI/2);
 		
 		canvas.addGLEventListener(this);
 		
@@ -125,6 +125,17 @@ public class GameCanvas implements GLEventListener
 				//System.out.println("Released Up");
 			}
 		});
+		
+		root.getInputMap(JRootPane.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("pressed C"), "pressedC");
+		
+		root.getActionMap().put("pressedC", new AbstractAction() {
+			public void actionPerformed(ActionEvent e)
+			{
+				lander.resetToOrgin();
+				//System.out.println("Pressed Up");
+			}
+		});
+		
 	}
 
 	@Override

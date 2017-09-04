@@ -4,10 +4,11 @@ import java.awt.geom.AffineTransform;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.util.awt.TextRenderer;
 
 public class Lander
 {
-    private final double SHIP_ACCEL = .3;
+    private final double SHIP_ACCEL = .25;
     private double vertVelocity;
     private double horzVelocity;
     private float dir;
@@ -32,24 +33,34 @@ public class Lander
     {
         if(rotateLeft)
         {
-            dir += Math.PI/64;
+            dir += Math.PI/32;
             if(dir > Math.PI)
                 dir = (float)Math.PI;
         }
         
         if(rotateRight)
         {
-            dir -= Math.PI/64;
+            dir -= Math.PI/32;
             if(dir < 0)
                 dir = 0;
         }
             
         if(thrust)
         {
-            vertVelocity -= Math.sin(dir) * SHIP_ACCEL;
+            vertVelocity += Math.sin(dir) * SHIP_ACCEL;
             horzVelocity += Math.cos(dir) * SHIP_ACCEL;
         }
-        vertVelocity += .05;
+        if(vertVelocity > 25f)
+        	vertVelocity = 25f;
+        else if(vertVelocity < -25f)
+        	vertVelocity = -25f;
+        
+        if(horzVelocity > 25f)
+        	horzVelocity = 25f;
+        else if(horzVelocity < -25f)
+        	horzVelocity = -25f;
+
+        vertVelocity -= .1;
             
         x += horzVelocity;
         y += vertVelocity;
@@ -59,24 +70,32 @@ public class Lander
     {
     	GL2 gl = drawable.getGL().getGL2();
     	
-    	gl.glPushMatrix();
     	gl.glLoadIdentity(); 
-    	
+    	gl.glPushMatrix();
+    	TextRenderer textDraw = new TextRenderer(new Font("Arial",Font.BOLD,10));
+    	float angle = (dir * 180)/(float)Math.PI;
     	//gl.glRotatef(dir, 1, 0, 0);
-    	//gl.glRotatef(dir, 0, 1, 0);
-    	gl.glRotated(dir, 1, 0, 1);
-    	gl.glTranslatef(x, -y, 0);
+    	//gl.glRotatef(angle, 0, 0, 1);
+    	gl.glTranslatef(x, y, 0);
+    	gl.glRotated(angle, 0, 0, 1);
+
     	
     	
-    	//System.out.printf("Rotation: %.2f\n",dir);
+    	System.out.printf("Velocity: (%.2f,%.2f)\n",horzVelocity,vertVelocity);
     	
-    	gl.glBegin(GL.GL_TRIANGLES);
-        gl.glColor3f(1.0f, 0.0f, .0f);   // Red
-        gl.glVertex2f(-20f, -20f);
-        gl.glColor3f(0.0f, 1.0f, 0.0f);   // Green
-        gl.glVertex2f(0.0f, 20f);
-        gl.glColor3f(0.0f, 0.0f, 1.0f);   // Blue
-        gl.glVertex2f(20f, -20f);
+    	gl.glBegin(GL2.GL_QUADS);
+        gl.glColor3f((float)Math.random(),(float)Math.random(),(float)Math.random());   
+        gl.glVertex2f(-20f, -10f);
+        gl.glColor3f((float)Math.random(),(float)Math.random(),(float)Math.random()); 
+        gl.glVertex2f(-20f, 10f);
+        gl.glColor3f((float)Math.random(),(float)Math.random(),(float)Math.random());
+        gl.glVertex2f(20f, 10f);
+        gl.glColor3f((float)Math.random(),(float)Math.random(),(float)Math.random()); 
+        gl.glVertex2f(20f, -10f);
+       
+        
+    	//gl.glRotated(-dir, 0, 0, 1);
+
         
         gl.glPopMatrix();      
         
@@ -129,7 +148,13 @@ public class Lander
     }
     
     
-    
+    public void resetToOrgin()
+    {
+    	x = 0;
+    	y = 0;
+    	horzVelocity = 0;
+    	vertVelocity = 0;
+    }
     // oh my god this is ugly. it works tho!
     public void drawCharacters(Graphics2D g2, String toWrite, int x, int y, int increment)
     {
