@@ -37,7 +37,7 @@ public class Lander
             if(dir > Math.PI)
                 dir = (float)Math.PI;
         }
-        
+               
         if(rotateRight)
         {
             dir -= Math.PI/32;
@@ -74,8 +74,6 @@ public class Lander
     	gl.glPushMatrix();
     	TextRenderer textDraw = new TextRenderer(new Font("Arial",Font.BOLD,10));
     	float angle = (dir * 180)/(float)Math.PI;
-    	//gl.glRotatef(dir, 1, 0, 0);
-    	//gl.glRotatef(angle, 0, 0, 1);
     	gl.glTranslatef(x, y, 0);
     	gl.glRotated(angle, 0, 0, 1);
 
